@@ -3,7 +3,7 @@ presets:
     trakt_acquired:
       username: USER NAME
       password: "####"
-      api_key: c6b5476a17de072bf91678776b11366f
+      api_key: API KEY
       type: series
   rssout:
     make_rss:
@@ -13,7 +13,7 @@ presets:
     import_series:
       from:
         thetvdb_favorites:
-          account_id: 0A9D2F92C462F8EB
+          account_id: YOUR ACCOUNT ID
       settings:
         upgrade: yes
         qualities:
@@ -43,7 +43,7 @@ presets:
 
 tasks:
   btn:
-    rss: https://broadcasthe.net/feeds.php?feed=torrents_notify_28109_agewu0pds3umu2if4r5oqcgfcw0aov4t&user=1495780&auth=aeb4de1b1e2a212584dbb3eb46c371ce&passkey=agewu0pds3umu2if4r5oqcgfcw0aov4t&authkey=8d8ccdea39c2bd4ce31614d28447b5b6&name=All
+    rss: "RSS FEED GOES HERE"
     priority: 1
     preset: 
       - best
@@ -54,9 +54,9 @@ tasks:
     download: /Users/USER NAME/Downloads
 
   tvt:
-    rss: http://freshon.tv/rss.php?feed=dl
+    rss: "RSS FEED GOES HERE"
     headers:
-      Cookie: "uid=210232; pass=b19d297e3da68581b81f1f4f07b02c7c"
+      Cookie: "uid=; pass="
     priority: 2
     interval: 15 minutes
     preset: 
@@ -69,9 +69,9 @@ tasks:
     download: /Users/USER NAME/Downloads
 
   movies:
-    rss: https://www.bitleechers.me/rss.php?cat=68,67&dllink=1
+    rss: "RSS FEED GOES HERE"
     headers:
-      Cookie: "passkey=d799929c4eba5ce551b38689beb36d1fdbf8aac4"
+      Cookie: "passkey="
     imdb_list:
       username: USER NAME
       password: "####"
