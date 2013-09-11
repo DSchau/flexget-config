@@ -84,10 +84,28 @@
 			.airRuntime {
 				display: none !important;
 			}
+			
+			.episodeDetails, .rating {
+			    font-size: 1.1em;
+			}
+
+			.details {
+				padding: 5px 10px !important;
+				position: inherit !important;
+			}
 		}
-		.episodeDetails, .rating {
-		    font-size: 1.1em;
+		@media screen and (min-device-width: 715px) {
+			.episodeDetails {
+				font-size: 1.2em;
+			}
+			.rating {
+				font-size: 1em;
+			}
+			.plot {
+				font-size: 1.1em;
+			}
 		}
+		
 		.episodeDetails {
 		    font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		    color: #999;
@@ -132,6 +150,7 @@
 		    margin-top: 15px;
 		    text-align: center;
 		    font-size: .8em;
+		    border-top: 1px solid rgba(255, 255, 255, 0.2)
 		}
 		.num {
 		    font-weight: bold;
@@ -151,6 +170,7 @@
 <body>
 	<div class="container">
 		{% for entry in task.accepted %}
+
 			{% if entry.series_name is defined %}
 				<div class="series">
 					{% if entry.tvdb_fanart_url|d(false) %}

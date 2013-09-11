@@ -10,7 +10,7 @@
 		    background-color: #fff;
 		    padding: 0;
 		    margin: 0;
-		    color: #000; /* Resets task color (so not visible) */ 
+		    color: #fff; /* Resets task color (so not visible) */ 
 		}
 		a {
 			text-decoration: none;
@@ -84,10 +84,28 @@
 			.airRuntime {
 				display: none !important;
 			}
+			
+			.episodeDetails, .rating {
+			    font-size: 1.1em;
+			}
+
+			.details {
+				padding: 5px 10px !important;
+				position: inherit !important;
+			}
 		}
-		.episodeDetails, .rating {
-		    font-size: 1.1em;
+		@media screen and (min-device-width: 715px) {
+			.episodeDetails {
+				font-size: 1.2em;
+			}
+			.rating {
+				font-size: 1em;
+			}
+			.plot {
+				font-size: 1.1em;
+			}
 		}
+		
 		.episodeDetails {
 		    font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		    color: #000;
