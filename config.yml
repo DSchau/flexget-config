@@ -1,14 +1,17 @@
 presets: 
+  # sync shows with trakt, not currently used in my setup
   acquired:
     trakt_acquired:
       username: YOUR USER NAME
       password: "YOUR PASSWORD"
       api_key: YOUR API KEY
       type: series
+  # makes rss with accepted entries from task (when configured as a preset for that task)
   rssout:
     make_rss:
       file: /Users/YOUR USER NAME/Library/tmp/downloads.rss
       days: 1
+  # My favorite shows, shows that I want to get the best quality--upgrade when available--get shows from tvdb favorites
   best:
     import_series:
       from:
@@ -20,6 +23,7 @@ presets:
           - 720p hdtv+
           - 720p webdl
           - 720p bluray
+  # shows I just want to watch, not particularly concerned with best quality
   release:
     series:
       settings:
@@ -35,6 +39,7 @@ presets:
         # - The Daily Show
         # - Around the Horn
         # - Pardon the Interruption
+  # I had a few season packs downloading, so I included this as a check; could probably set max to less
   size_limit: 
     content_size:
       min: 150
@@ -50,7 +55,7 @@ tasks:
       - acquired
       - size_limit
       - rssout
-    thetvdb_lookup: yes
+    thetvdb_lookup: yes # used by the email task to get much more interesting data (e.g. cover art, fan art, rating, etc.)
     download: /Users/YOUR USER NAME/Downloads
 
   tvt:
@@ -67,6 +72,7 @@ tasks:
     thetvdb_lookup: yes
     download: /Users/YOUR USER NAME/Downloads
 
+  # get my queue from imdb, add to internal flexget queue
   movie_queue_imdb:
     priority: 3
     imdb_list:
@@ -78,6 +84,7 @@ tasks:
       quality: 720p bluray
       force: yes
 
+  # download movies using queue from previous imdb task
   movies:
     priority: 4
     rss: YOUR RSS
@@ -95,6 +102,9 @@ tasks:
     download: /Users/YOUR USER NAME/Movies/Trailers/
     manual: yes
 
+  # I like my TV shows named differently, e.g. E12 Crawl Space v. Breaking Bad S04E12 720p web-dl
+  # so I rename them and move to external harddrive (I use a different app to copy files to a different dir. 
+  # so that they can continue to seed in /Torrents)
   move-episodes:
     metainfo_series: yes
     accept_all: yes
@@ -131,6 +141,7 @@ tasks:
     # preset: tv # need to fix for actual recognition - quality will scrwe it up
     manual: yes
 
+  # every day, if RSS feed is not blank (it's cleared every day in the RSS task), sends an e-mail of downloads
   emailfeed:
     interval: 1 days
     rss:
@@ -142,7 +153,7 @@ tasks:
     email:
       from: YOUR USER NAME
       to: YOUR EMAIL
-      subject: Downloaded Media Update
+      subject: Flexget Media Update
       template: html_enhanced-dark
       smtp_host: smtp.gmail.com
       smtp_port: 587
