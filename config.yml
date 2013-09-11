@@ -1,13 +1,13 @@
 presets: 
   acquired:
     trakt_acquired:
-      username: USER NAME
-      password: "####"
-      api_key: API KEY
+      username: YOUR USER NAME
+      password: "YOUR PASSWORD"
+      api_key: YOUR API KEY
       type: series
   rssout:
     make_rss:
-      file: /Users/USER NAME/Library/tmp/downloads.rss
+      file: /Users/YOUR USER NAME/Library/tmp/downloads.rss
       days: 1
   best:
     import_series:
@@ -43,7 +43,7 @@ presets:
 
 tasks:
   btn:
-    rss: "RSS FEED GOES HERE"
+    rss: RSS FEED
     priority: 1
     preset: 
       - best
@@ -51,14 +51,13 @@ tasks:
       - size_limit
       - rssout
     thetvdb_lookup: yes
-    download: /Users/USER NAME/Downloads
+    download: /Users/YOUR USER NAME/Downloads
 
   tvt:
-    rss: "RSS FEED GOES HERE"
+    rss: RSS FEED
     headers:
-      Cookie: "uid=; pass="
+      Cookie: "uid=####; pass=##########"
     priority: 2
-    interval: 15 minutes
     preset: 
       - best
       - release
@@ -66,25 +65,34 @@ tasks:
       - size_limit
       - rssout
     thetvdb_lookup: yes
-    download: /Users/USER NAME/Downloads
+    download: /Users/YOUR USER NAME/Downloads
 
-  movies:
-    rss: "RSS FEED GOES HERE"
-    headers:
-      Cookie: "passkey="
+  movie_queue_imdb:
+    priority: 3
     imdb_list:
-      username: USER NAME
-      password: "####"
+      username: YOUR USER NAME
+      password: YOUR PASSWORD
       list: watchlist
     accept_all: yes
     queue_movies:
       quality: 720p bluray
       force: yes
 
+  movies:
+    priority: 4
+    rss: YOUR RSS
+    interval: 2 hours
+    headers:
+      Cookie: "uid=####; pass=#############"
+    # preset: size_limit
+    movie_queue: yes
+    seen_movies: strict
+    download: /Users/YOUR USER NAME/Downloads/
+
   trailers:
     apple_trailers: 720p
     accept_all: yes
-    download: /Users/USER NAME/Movies/Trailers/
+    download: /Users/YOUR USER NAME/Movies/Trailers/
     manual: yes
 
   move-episodes:
@@ -92,12 +100,12 @@ tasks:
     accept_all: yes
     thetvdb_lookup: yes
     find:
-      path: /Users/USER NAME/Downloads/Torrents/TV Shows/
+      path: /Users/YOUR USER NAME/Downloads/Torrents/TV Shows/
       regexp: '.*(WEB.?DL|Bluray).*mkv' # only copy good quality for the external hd
       recursive: no
     move:
       to: "/Volumes/VIDEO/{{ series_name }}/{% if series_season is defined and series_season < 1000 %}Season {% else %}{% endif %}{{ series_season }}/"
-      # to: "/Users/USER NAME/Movies/TV Shows/{{ series_name }}/Season {{series_season}}/"
+      # to: "/Users/YOUR USER NAME/Movies/TV Shows/{{ series_name }}/Season {{series_season}}/"
       filename: "{% if tvdb_episode|d(false) %}E{{tvdb_episode|pad(2)}} {% if tvdb_ep_name|d(false) %}{{tvdb_ep_name}}{% endif %} {% else %}{{title}} {% endif %}" 
     manual: yes
 
@@ -106,7 +114,7 @@ tasks:
     imdb_lookup: yes
     imdb_required: yes
     find:
-      path: /Users/USER NAME/Downloads/Torrents/
+      path: /Users/YOUR USER NAME/Downloads/Torrents/
       regexp: '.*(mkv|avi|mp4)'
       recursive: yes
     move:
@@ -126,18 +134,18 @@ tasks:
   emailfeed:
     interval: 1 days
     rss:
-      url: /Users/USER NAME/Library/tmp/downloads.rss
+      url: /Users/YOUR USER NAME/Library/tmp/downloads.rss
     disable_builtins: [seen]
     metainfo_series: yes # required for tvdb lookup to work, email template to function correctly
     thetvdb_lookup: yes
     accept_all: yes
     email:
-      from: USER NAME@gmail.com
-      to: USER NAME+flexget@gmail.com
-      subject: Update of TV Shows Downloaded
+      from: YOUR USER NAME
+      to: YOUR EMAIL
+      subject: Downloaded Media Update
       template: html_enhanced-dark
       smtp_host: smtp.gmail.com
       smtp_port: 587
-      smtp_username: USER NAME
-      smtp_password: "####"
+      smtp_username: YOUR USER NAME
+      smtp_password: YOUR PASSWORD
       smtp_tls: yes
