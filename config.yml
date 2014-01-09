@@ -1,30 +1,46 @@
-presets: 
-  # sync shows with trakt, not currently used in my setup
+presets:
+  global:
+    content_filter:
+      require:
+        - '*.mkv'
+        - '*.avi'
+        - '*.mp4'
   acquired:
     trakt_acquired:
-      username: YOUR USER NAME
-      password: "YOUR PASSWORD"
-      api_key: YOUR API KEY
+      username: dschau
+      password: password
+      api_key: c6b5476a17de072bf91678776b11366f
       type: series
-  # makes rss with accepted entries from task (when configured as a preset for that task)
   rssout:
     make_rss:
-      file: /Users/YOUR USER NAME/Library/tmp/downloads.rss
+      file: /home/dschau/.rss/downloads.rss
       days: 1
-  # My favorite shows, shows that I want to get the best quality--upgrade when available--get shows from tvdb favorites
   best:
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      path: '/mnt/Media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
     import_series:
       from:
         thetvdb_favorites:
-          account_id: YOUR ACCOUNT ID
+          account_id: 0A9D2F92C462F8EB
+          strip_dates: yes
       settings:
         upgrade: yes
         qualities:
           - 720p hdtv+
           - 720p webdl
           - 720p bluray
-  # shows I just want to watch, not particularly concerned with best quality
+        identified_by: ep
   release:
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      path: '/mnt/Media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
     series:
       settings:
         release:
@@ -39,7 +55,13 @@ presets:
         # - The Daily Show
         # - Around the Horn
         # - Pardon the Interruption
-  # I had a few season packs downloading, so I included this as a check; could probably set max to less
+  import_transmission:
+    from_transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      onlycomplete: yes
   size_limit: 
     content_size:
       min: 150
@@ -47,116 +69,149 @@ presets:
       strict: no
 
 tasks:
-  btn:
-    rss: RSS FEED
+  broadcasthenet:
+    rss: https://broadcasthe.net/feeds.php?
     priority: 1
     preset: 
       - best
-      - acquired
       - size_limit
       - rssout
-    thetvdb_lookup: yes # used by the email task to get much more interesting data (e.g. cover art, fan art, rating, etc.)
-    download: /Users/YOUR USER NAME/Downloads
+    thetvdb_lookup: yes
+
+  broadcasthenet_manual:
+    headers:
+      Cookie: "user=99999; auth=authkey; passkey=-passkey;"
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      path: '/mnt/Media/TV Shows/{{ series_name|d("Sort")}}/{% if series_season is defined %}Season {{ series_season }}{% endif %}'
+      addpaused: yes
+    preset:
+      - rssout
+    thetvdb_lookup: yes
+    metainfo_series: yes
+    manual: yes
 
   tvt:
-    rss: RSS FEED
-    headers:
-      Cookie: "uid=####; pass=##########"
+    rss: http://freshon.tv/rss.php?feed=dl&passkey=passkey
     priority: 2
     preset: 
       - best
       - release
-      - acquired
       - size_limit
       - rssout
     thetvdb_lookup: yes
-    download: /Users/YOUR USER NAME/Downloads
 
-  # get my queue from imdb, add to internal flexget queue
+  tvt_manual:
+    headers:
+      Cookie: "uid=uid; pass=pass"
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      path: '/mnt/Media/TV Shows/{{ series_name|d("Undefined") }}{% if series_season is defined %}/Season {{ series_season }}/{% endif %}'
+    preset:
+      - rssout
+    thetvdb_lookup: yes
+    metainfo_series: yes
+    manual: yes
+
+  torrentleech:
+    torrentleech:
+      rss_key: rssKey
+      username: DSchau
+      password: password
+    manual: yes
+
   movie_queue_imdb:
     priority: 3
     imdb_list:
-      username: YOUR USER NAME
-      password: YOUR PASSWORD
+      username: dustinschau@gmail.com
+      password: password
       list: watchlist
     accept_all: yes
     queue_movies:
       quality: 720p bluray
       force: yes
+    manual: yes
 
-  # download movies using queue from previous imdb task
   movies:
-    priority: 4
-    rss: YOUR RSS
+    rss: http://passthepopcorn.me/
+    preset: rssout
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      addpaused: yes
+      path: '/mnt/Media/Movies/'
     interval: 2 hours
-    headers:
-      Cookie: "uid=####; pass=#############"
-    # preset: size_limit
     movie_queue: yes
     seen_movies: strict
-    download: /Users/YOUR USER NAME/Downloads/
-
-  trailers:
-    apple_trailers: 720p
     accept_all: yes
-    download: /Users/YOUR USER NAME/Movies/Trailers/
     manual: yes
 
-  # I like my TV shows named differently, e.g. E12 Crawl Space v. Breaking Bad S04E12 720p web-dl
-  # so I rename them and move to external harddrive (I use a different app to copy files to a different dir. 
-  # so that they can continue to seed in /Torrents)
-  move-episodes:
-    metainfo_series: yes
-    accept_all: yes
-    thetvdb_lookup: yes
-    find:
-      path: /Users/YOUR USER NAME/Downloads/Torrents/TV Shows/
-      regexp: '.*(WEB.?DL|Bluray).*mkv' # only copy good quality for the external hd
-      recursive: no
-    move:
-      to: "/Volumes/VIDEO/{{ series_name }}/{% if series_season is defined and series_season < 1000 %}Season {% else %}{% endif %}{{ series_season }}/"
-      # to: "/Users/YOUR USER NAME/Movies/TV Shows/{{ series_name }}/Season {{series_season}}/"
-      filename: "{% if tvdb_episode|d(false) %}E{{tvdb_episode|pad(2)}} {% if tvdb_ep_name|d(false) %}{{tvdb_ep_name}}{% endif %} {% else %}{{title}} {% endif %}" 
+  movies_manual:
+    preset: rssout
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      addpaused: yes
+      path: '/mnt/Media/Movies/'
     manual: yes
 
-  move-movies:
+  music_manual:
+    transmission:
+      host: 192.168.0.250
+      port: 9091
+      username: dschau
+      password: password
+      path: '/mnt/Media/Music'
+    manual: yes
+
+  copy-movies:
     accept_all: yes
     imdb_lookup: yes
+    tmdb_lookup: yes
     imdb_required: yes
-    find:
-      path: /Users/YOUR USER NAME/Downloads/Torrents/
-      regexp: '.*(mkv|avi|mp4)'
-      recursive: yes
-    move:
-      to: "/Volumes/Video/Movies/"
-      filename: "{% if imdb_name is defined %}{{imdb_name}}{% if imdb_year is defined %}({{imdb_year}}){% endif %}{% else %}{{title}}{% endif %}"
+    disable_builtins: [seen]
+    preset: import_transmission
+    copy:
+      to: /mnt/Media/Movies/
+      filename: "{% if imdb_name is defined %}{{imdb_name}}{% if imdb_year is defined %} ({{imdb_year}}){% endif %}{% else %}{{title}}{% endif %}"
     manual: yes
 
   # only need to call function when seeding db for the first time
   seed_series_db:
+    disable_builtins: [seen]
     find:
       regexp: .*(avi|mkv|mp4)$
       path: /Volumes/VIDEO/
       recursive: yes
-    # preset: tv # need to fix for actual recognition - quality will scrwe it up
     manual: yes
 
-  # every day, if RSS feed is not blank (it's cleared every day in the RSS task), sends an e-mail of downloads
   emailfeed:
     interval: 1 days
     rss:
-      url: /Users/YOUR USER NAME/Library/tmp/downloads.rss
+      url: /home/dschau/.rss/downloads.rss
     disable_builtins: [seen]
     metainfo_series: yes # required for tvdb lookup to work, email template to function correctly
     thetvdb_lookup: yes
+    imdb_lookup: yes
+    tmdb_lookup: yes
     accept_all: yes
     email:
-      from: YOUR USER NAME
-      to: YOUR EMAIL
-      subject: Flexget Media Update
-      template: html_enhanced-dark
+      from: email@gmail.com
+      to: email+flexget@gmail.com
+      subject: Downloaded Media Update
+      template: html
       smtp_host: smtp.gmail.com
       smtp_port: 587
-      smtp_username: YOUR USER NAME
-      smtp_password: YOUR PASSWORD
+      smtp_username: dustinschau
+      smtp_password: password
       smtp_tls: yes

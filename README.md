@@ -1,5 +1,20 @@
-Flexget Config and HTML Templates
-==============
+# Flexget Config and HTML Templates
+***
+## v. 2
+
+### Changes
+
+- Various stylistic changes (dropped support for dark theme, can still be used with html_enhanced_dark.template)
+
+ - Stars look a little nicer
+ - A minor selection of TV shows now use some coloring  to match their poster/logo
+ - Added a separator between downloads
+- Rudimentary support for movies
+ - No support for fanart, but it's someting I'm looking into and trying to figure out
+
+### [Check it out](http://dustinschau.com/drop/flexget/test-email.html)
+***
+# v1
 
 [Flexget](http://flexget.com/) is an excellent tool for automatic downloading of tv shows, along with other content (such as movies). However, it was, for me at least, marginally difficult to get configured in a way that I was pleased with. 
 
