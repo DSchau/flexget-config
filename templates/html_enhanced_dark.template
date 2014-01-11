@@ -166,39 +166,40 @@
 		    border-radius: 4px;
 		}
 	</style>
+
 </head>
-<body>
-	<div class="container">
+<body style="font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; background-color: #222; color: #ccc; margin: 0; padding: 0;" bgcolor="#222">
+	<div class="container" style="color: #ccc; margin: 0 auto;">
 		{% for entry in task.accepted %}
 
 			{% if entry.series_name is defined %}
 				<div class="series">
 					{% if entry.tvdb_fanart_url|d(false) %}
-						<div class="banner">
+						<div class="banner" style="position: relative;">
 							{% if entry.imdb_id is defined %}
-								<a href="http://www.imdb.com/title/{{entry.imdb_id}}/"><img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" /></a>
+								<a href="http://www.imdb.com/title/{{entry.imdb_id}}/" style="text-decoration: none; border: none;"><img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" style="width: 100%; z-index: 1;" /></a>
 							{% elif entry.tvdb_id is defined %}
-								<a href="http://thetvdb.com/?tab=series&id={{entry.tvdb_id}}"><img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" /></a>
+								<a href="http://thetvdb.com/?tab=series&id={{entry.tvdb_id}}" style="text-decoration: none; border: none;"><img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" style="width: 100%; z-index: 1;" /></a>
 							{% else %}
-								<img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" />
+								<img src="{{ entry.tvdb_fanart_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" style="width: 100%; z-index: 1;" />
 							{% endif %}
-							<div class="info">
-								<span class="seriesName">{{ entry.series_name|re_replace('\s?[0-9]{4}', '') }}</span>
-								<span class="epName">
+							<div class="info" style="display: inline-block; color: white; opacity: .75; position: absolute; bottom: 12px; left: 10px; z-index: 999; border-radius: 5px; background-color: black; padding: 10px 15px;">
+								<span class="seriesName" style="display: block; font-weight: bold; font-size: 1.2em; color: #00ccff; text-shadow: 0 1px 0 #000;">{{ entry.series_name|re_replace('\s?[0-9]{4}', '') }}</span>
+								<span class="epName" style="display: block; font-weight: light; font-size: 1em;">
 									{% if entry.tvdb_ep_name|d(false) %}
 										{{entry.tvdb_ep_name}}
 									{% endif %}
 								</span>
 							</div>
 						</div>
-						<div class="shadedLine"></div>
-						<div class="details">
+						<div class="shadedLine" style="height: 3px; background-image: linear-gradient(to right, #00ccff 0%,#008de5 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ccff', endColorstr='#008de5',GradientType=1 ); position: relative; bottom: 6px; z-index: 999;"></div>
+						<div class="details" style="min-height: inherit !important; position: inherit !important; display: block; bottom: 10px; padding: 5px 10px;">
 							{%if entry.tvdb_poster_url is defined %}
-								<div class="poster">
-									<img src="{{ entry.tvdb_poster_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}" />
+								<div class="poster" style="display: none !important; width: 150px; float: left; padding-right: 15px;">
+									<img src="{{ entry.tvdb_poster_url }}" alt="{{ entry.series_name }}" title="{{ entry.series_name }}"  style="width: 150px; z-index: 1; border-radius: 4px;"/>
 								</div>
 							{% endif %}
-							<div class="episodeDetails">
+							<div class="episodeDetails" style="font-size: 1.2em; font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; color: #999;">
 								<span class="seasonEp">
 							<!-- Sometimes seasons are the year (e.g. 2013; tvdb doesn't have that issue) -->
 								{% if entry.series_season is defined and entry.series_season < 25 %}
@@ -213,7 +214,7 @@
 									Episode {{entry.series_episode}}
 								{% endif %}
 								</span>
-								<span class="airRuntime">
+								<span class="airRuntime" style="display: none !important;">
 								{% if entry.tvdb_ep_air_date is defined %}
 									 ·  {{entry.tvdb_ep_air_date|formatdate('%b %d, %Y')}}
 								{% endif %}
@@ -223,7 +224,7 @@
 								{% endif %}
 								</span>
 							
-							<span class="rating">
+							<span class="rating" style="font-size: 1em; float: right; position: relative; bottom: 4px;">
 								{% if entry.tvdb_ep_rating is defined %}
 									{% if entry.tvdb_ep_rating == 0 %}
 										☆☆☆☆☆
@@ -242,7 +243,7 @@
 							</span>
 							</div>
 
-							<p class="plot">
+							<p class="plot" style="font-size: 1.1em; margin: 0; padding: 10px 0 0;">
 								{% if entry.tvdb_ep_overview|d(false) %}
 									{{entry.tvdb_ep_overview}}
 								{% endif %}
@@ -254,10 +255,14 @@
 				</div>
 			{% endif %} <!-- end of series name if -->
 		{% endfor %}
-		<div class="footer">
-			<span class="num">{{task.accepted|length}}</span> item(s) downloaded by Flexget.
+		<div class="footer" style="background-color: #000; margin-top: 15px; text-align: center; font-size: .8em; border-top-width: 1px; border-top-color: rgba(255, 255, 255, 0.2); border-top-style: solid; padding: 10px;" align="center">
+			<span class="num" style="font-weight: bold;">{{task.accepted|length}}</span> item(s) downloaded by Flexget.
 		</div>
 	</div>
+<style type="text/css">
+body { font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important; background-color: #222 !important; padding: 0 !important; margin: 0 !important; color: #ccc !important; }
+img { width: 100% !important; z-index: 1 !important; }
+</style>
 </body>
 </html>
 {% endif %}
