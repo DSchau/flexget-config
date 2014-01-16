@@ -21,9 +21,8 @@
 1. You **must** install the custom filters, otherwise the e-mail template will error out
 2. There are some CSS selectors (as well as media queries) that just can't be replicated with inline CSS. As such, you'll be getting a slightly diminished experience if viewing it in an e-mail client that *only* supports inline styles, e.g. Gmail
 3. I'm still working on getting movies working satisfactorily; I may have to end up modifying the tmdb plugin in order to get it to work as well as TV shows
-# [Check it out](http://dustinschau.com/drop/flexget/test-email.html)
 
-***
+## [Check it out](http://dustinschau.com/drop/flexget/test-email.html)
 
 # v1
 
