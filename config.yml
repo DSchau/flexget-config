@@ -9,7 +9,7 @@ presets:
     trakt_acquired:
       username: dschau
       password: password
-      api_key: c6b5476a17de072bf91678776b11366f
+      api_key: API_KEY_HERE
       type: series
   rssout:
     make_rss:
