@@ -12,7 +12,16 @@
 - Rudimentary support for movies
  - No support for fanart, but it's someting I'm looking into and trying to figure out
 
-### [Check it out](http://dustinschau.com/drop/flexget/test-email.html)
+### Installation Instructions
+- Copy whichever HTML template you choose into `(flexget install location)/templates/email/`
+- Copy the custom filters into `(flexget install location)/utils/template.py` (either replace the file, or do a diff and copy the changes)
+- flexget is usually installed somewhere like `/usr/local/lib/python2.7/dist-packages/flexget/`
+
+### Additional Notes
+1. You **must** install the custom filters, otherwise the e-mail template will error out
+2. There are some CSS selectors (as well as media queries) that just can't be replicated with inline CSS. As such, you'll be getting a slightly diminished experience if viewing it in an e-mail client that *only* supports inline styles, e.g. Gmail
+3. I'm still working on getting movies working satisfactorily; I may have to end up modifying the tmdb plugin in order to get it to work as well as TV shows
+# [Check it out](http://dustinschau.com/drop/flexget/test-email.html)
 ***
 # v1
 

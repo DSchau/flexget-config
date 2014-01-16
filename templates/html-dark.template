@@ -165,8 +165,8 @@
 		{% endfor %}
 	</style>
 </head>
-<body style="font-family:'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; sans-serif; background-color: #fff; padding: 0; margin: 0; color: #fff;"> 
-	<div class="container" style="color: #222; margin: 0 auto;">
+<body style="font-family:'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; background-color: #222; padding: 0; margin: 0; color: #ccc;"> 
+	<div class="container" style="color: #ccc; margin: 0 auto;">
 		{% for ep in tv_shows %}
 			<div class="series">
 				{% if ep.tvdb_fanart_url|d(false) %}
@@ -323,7 +323,7 @@
 
 		{% set download_date = download_date[0] %}
 
-		<div class="footer" style="font-family:'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; background-color: #ccc; border-top: 1px dashed #888; padding: 10px; margin-top: 15px; text-align: center; font-size: .8em;">
+		<div class="footer" style="font-family:'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; background-color: #000; border-top: 1px dashed #888; padding: 10px; margin-top: 15px; text-align: center; font-size: .8em; border-top: 1px solid rgba(255, 255, 255, 0.2);">
 			{% set item_count = unique_list|length %}
 			<span class="num" style="font-weight: bold;">{{item_count}}</span> {{'item' if item_count == 1 else 'items'}} downloaded on {{download_date}}.
 		</div>
