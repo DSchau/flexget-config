@@ -15,6 +15,7 @@
 ### Installation Instructions
 - Copy whichever HTML template you choose into `(flexget install location)/templates/email/`
 - Copy the custom filters into `(flexget install location)/utils/template.py` (either replace the file, or do a diff and copy the changes)
+  - Only if using flexget version prior to 1.2.44 (my custom filters were merged into the default flexget template.py)
 - flexget is usually installed somewhere like `/usr/local/lib/python2.7/dist-packages/flexget/`
 
 ### Additional Notes
