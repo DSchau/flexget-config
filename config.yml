@@ -1,66 +1,43 @@
-presets:
+ gschedules:
+  # Run every task every 30 minutes
+  - tasks: [broadcasthenet,tvt]
+    interval:
+      minutes: 15
+  # Run email task every night at 11:00
+  - tasks: [emailfeed]
+    interval:
+      days: 1
+      at_time: 11:00 pm
+
+templates:
   global:
     content_filter:
       require:
         - '*.mkv'
         - '*.avi'
         - '*.mp4'
-  acquired:
-    trakt_acquired:
-      username: dschau
-      password: password
-      api_key: API_KEY_HERE
-      type: series
+        - '*.mp3'
+        - '*.aac'
+    cookies: ~/.flexget/.cookies/cookies.sqlite
   rssout:
     make_rss:
-      file: /home/dschau/.rss/downloads.rss
+      file: ~/.flexget/.rss/downloads.rss
       days: 1
-  best:
+  torrent_server:
     transmission:
-      host: 192.168.0.250
-      port: 9091
+      port: 9000
       username: dschau
-      password: password
-      path: '/mnt/Media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
-    import_series:
-      from:
-        thetvdb_favorites:
-          account_id: 0A9D2F92C462F8EB
-          strip_dates: yes
-      settings:
-        upgrade: yes
-        qualities:
-          - 720p hdtv+
-          - 720p webdl
-          - 720p bluray
-        identified_by: ep
-  release:
-    transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
-      path: '/mnt/Media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
-    series:
-      settings:
-        release:
-          quality: 720p hdtv+
-      release:
-        - Louie
-        - The Newsroom
-        - The Soup
-        - The Walking Dead
-        - Workaholics
-        # - The Colbert Report
-        # - The Daily Show
-        # - Around the Horn
-        # - Pardon the Interruption
+      password: PASSWORD
+      path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
+  tv:
+    template: [torrent_server]
+    include: [series.yml]
   import_transmission:
     from_transmission:
-      host: 192.168.0.250
-      port: 9091
+      host: 24.252.20.168
+      port: 9000
       username: dschau
-      password: password
+      password: PASSWORD
       onlycomplete: yes
   size_limit: 
     content_size:
@@ -70,135 +47,62 @@ presets:
 
 tasks:
   broadcasthenet:
-    rss: https://broadcasthe.net/feeds.php?
+    discover:
+      what:
+        - emit_series: yes
+      from:
+        - btn: MY_KEY
+    template: [tv, size_limit, rssout]
+    thetvdb_lookup: yes
     priority: 1
-    preset: 
-      - best
-      - size_limit
-      - rssout
-    thetvdb_lookup: yes
-
-  broadcasthenet_manual:
-    headers:
-      Cookie: "user=99999; auth=authkey; passkey=-passkey;"
-    transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
-      path: '/mnt/Media/TV Shows/{{ series_name|d("Sort")}}/{% if series_season is defined %}Season {{ series_season }}{% endif %}'
-      addpaused: yes
-    preset:
-      - rssout
-    thetvdb_lookup: yes
-    metainfo_series: yes
-    manual: yes
 
   tvt:
-    rss: http://freshon.tv/rss.php?feed=dl&passkey=passkey
-    priority: 2
-    preset: 
-      - best
-      - release
-      - size_limit
-      - rssout
+    rss: http://freshon.tv/rss.php?feed=dl
+    template: [tv, size_limit, rssout]
     thetvdb_lookup: yes
+    priority: 2
 
-  tvt_manual:
-    headers:
-      Cookie: "uid=uid; pass=pass"
+  tv_manual:
+    template: [torrent_server, rssout]
     transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
-      path: '/mnt/Media/TV Shows/{{ series_name|d("Undefined") }}{% if series_season is defined %}/Season {{ series_season }}/{% endif %}'
-    preset:
-      - rssout
+      addpaused: yes
+    accept_all: yes
     thetvdb_lookup: yes
     metainfo_series: yes
-    manual: yes
-
-  torrentleech:
-    torrentleech:
-      rss_key: rssKey
-      username: DSchau
-      password: password
+    disable_builtins: [seen]
     manual: yes
 
   movie_queue_imdb:
     priority: 3
     imdb_list:
-      username: dustinschau@gmail.com
-      password: password
+      user_id: ur17289715
       list: watchlist
     accept_all: yes
     queue_movies:
       quality: 720p bluray
-      force: yes
-    manual: yes
-
-  movies:
-    rss: http://passthepopcorn.me/
-    preset: rssout
-    transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
-      addpaused: yes
-      path: '/mnt/Media/Movies/'
-    interval: 2 hours
-    movie_queue: yes
-    seen_movies: strict
-    accept_all: yes
     manual: yes
 
   movies_manual:
-    preset: rssout
+    template: [torrent_server, rssout]
+    set:
+      path: '/media/Movies'
     transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
       addpaused: yes
-      path: '/mnt/Media/Movies/'
+    accept_all: yes
+    disable_builtins: [seen]
     manual: yes
 
   music_manual:
-    transmission:
-      host: 192.168.0.250
-      port: 9091
-      username: dschau
-      password: password
-      path: '/mnt/Media/Music'
-    manual: yes
-
-  copy-movies:
+    template: [torrent_server]
+    set:
+      path: '/media/Music'
     accept_all: yes
-    imdb_lookup: yes
-    tmdb_lookup: yes
-    imdb_required: yes
     disable_builtins: [seen]
-    preset: import_transmission
-    copy:
-      to: /mnt/Media/Movies/
-      filename: "{% if imdb_name is defined %}{{imdb_name}}{% if imdb_year is defined %} ({{imdb_year}}){% endif %}{% else %}{{title}}{% endif %}"
-    manual: yes
-
-  # only need to call function when seeding db for the first time
-  seed_series_db:
-    disable_builtins: [seen]
-    find:
-      regexp: .*(avi|mkv|mp4)$
-      path: /Volumes/VIDEO/
-      recursive: yes
     manual: yes
 
   emailfeed:
-    interval: 1 days
     rss:
-      url: /home/dschau/.rss/downloads.rss
+      url: /home/dschau/.flexget/.rss/downloads.rss
     disable_builtins: [seen]
     metainfo_series: yes # required for tvdb lookup to work, email template to function correctly
     thetvdb_lookup: yes
@@ -206,12 +110,12 @@ tasks:
     tmdb_lookup: yes
     accept_all: yes
     email:
-      from: email@gmail.com
-      to: email+flexget@gmail.com
+      from: dustinschau@gmail.com
+      to: dustinschau+flexget@gmail.com
       subject: Downloaded Media Update
       template: html
       smtp_host: smtp.gmail.com
       smtp_port: 587
       smtp_username: dustinschau
-      smtp_password: password
+      smtp_password: PASSWORD
       smtp_tls: yes
