@@ -42,7 +42,7 @@ tasks:
 #        - emit_series: yes
 #      from:
 #        - btn: '{{ btn }}'
-    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user=1495780&auth=aeb4de1b1e2a212584dbb3eb46c371ce&passkey=vaswkvkl1t6bvwsdgevxdbg7d7b6seun&authkey=b46ce9ebe59daf0710c65d778107b10f'
+    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     thetvdb_lookup: yes
     priority: 1
@@ -102,7 +102,7 @@ tasks:
     accept_all: yes
     email:
       from: '{{ secrets.email }}'
-      to: 'dustinschau+flexget@gmail.com'
+      to: '{{ secrets.gmail.flexget-username }}'
       subject: Media Downloads
       template: html
       smtp_host: smtp.gmail.com
