@@ -1,0 +1,112 @@
+secrets: secrets.yml
+
+schedules:
+  # Run every task every 30 minutes
+  - tasks: [ broadcasthenet,tvt ]
+    schedule:
+      minute: "*/30"
+
+templates:
+  global:
+    content_filter:
+      require:
+        - '*.mkv'
+        - '*.avi'
+        - '*.mp4'
+        - '*.mp3'
+        - '*.aac'
+    cookies: ~/.flexget/.cookies/cookies.sqlite
+  rssout:
+    make_rss:
+      file: ~/.flexget/.rss/downloads.rss
+      days: 1
+  torrent_server:
+    transmission:
+      port: 9000
+      username: '{{ secrets.user }}'
+      password: '{{ secrets.password }}'
+      path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
+  tv:
+    template: [ torrent_server ]
+    include: [ series.yml ]
+  size_limit: 
+    content_size:
+      min: 150
+      max: 4250
+      strict: no
+
+tasks:
+  broadcasthenet:
+#    discover:
+#      what:
+#        - emit_series: yes
+#      from:
+#        - btn: '{{ btn }}'
+    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user=1495780&auth=aeb4de1b1e2a212584dbb3eb46c371ce&passkey=vaswkvkl1t6bvwsdgevxdbg7d7b6seun&authkey=b46ce9ebe59daf0710c65d778107b10f'
+    template: [ tv, size_limit, rssout ]
+    thetvdb_lookup: yes
+    priority: 1
+
+  tvt:
+    rss: 'http://freshon.tv/rss.php?feed=dl'
+    template: [ tv, size_limit, rssout ]
+    thetvdb_lookup: yes
+    priority: 2
+
+  tv_manual:
+    template: [ torrent_server, rssout ]
+    transmission:
+      addpaused: yes
+    accept_all: yes
+    thetvdb_lookup: yes
+    metainfo_series: yes
+    disable: [ seen ]
+    manual: yes
+
+  movie_queue_imdb:
+    priority: 3
+    imdb_list:
+      user_id: ur17289715
+      list: watchlist
+    accept_all: yes
+    # queue_movies:
+    #   quality: 720p bluray
+    manual: yes
+
+  movies_manual:
+    template: [ torrent_server, rssout ]
+    set:
+      path: '/media/Movies'
+    transmission:
+      addpaused: yes
+    accept_all: yes
+    disable: [ seen ]
+    manual: yes
+
+  music_manual:
+    template: [ torrent_server ]
+    set:
+      path: '/media/Music'
+    accept_all: yes
+    disable: [ seen ]
+    manual: yes
+
+  emailfeed:
+    rss:
+      url: '/home/{{ secrets.user }}/.flexget/.rss/downloads.rss'
+    disable: [ seen ]
+    metainfo_series: yes # required for tvdb lookup to work, email template to function correctly
+    thetvdb_lookup: yes
+    imdb_lookup: yes
+    tmdb_lookup: yes
+    accept_all: yes
+    email:
+      from: '{{ secrets.email }}'
+      to: 'dustinschau+flexget@gmail.com'
+      subject: Media Downloads
+      template: html
+      smtp_host: smtp.gmail.com
+      smtp_port: 587
+      smtp_username: '{{ secrets.gmail.username }}'
+      smtp_password: '{{ secrets.gmail.password }}'
+      smtp_tls: yes

@@ -1,0 +1,58 @@
+series:
+  settings:
+    favorites:
+      upgrade: yes
+      qualities:
+        - 720p webdl+
+        - 720p webrip+
+        # - 720p hdtv
+    hbo:
+      from_group: 
+        - NTb
+        - TxN
+        - DON
+        - CtrlHD
+        - BATV # John Oliver
+    new:
+      quality: 720p hdtv+
+    espn:
+      from_group: ESPNtb
+  favorites:
+    - Archer:
+        path: "/media/TV Shows/Archer (2009)/Season {{ series_season }}/"
+    - Broad City
+    - Fargo
+    - Homeland
+    - It's Always Sunny in Philadelphia
+    - Justified
+    - Louie:
+        path: "/media/TV Shows/Louie (2010)/Season {{ series_season }}/" 
+    - Mad Men
+    - Parks and Recreation
+    - Sherlock
+    - South Park
+    - Suits
+    - The League
+    - The Walking Dead
+    - Workaholics
+  hbo:
+    - Game of Thrones
+    - True Detective
+    - Eastbound and Down
+    - Boardwalk Empire
+    - Silicon Valley
+    - Last Week Tonight With John Oliver
+  new:
+    - Anthony Bourdain - Parts Unknown
+    - The Soup
+    - Vice
+    - Hard Knocks:
+        path: "/media/TV Shows/Hard Knocks (2001)"
+    - Gotham
+    - Brooklyn Nine-Nine
+    - Better Call Saul
+    - The Eric Andrew Show
+    - Trailer Park Boys
+  espn:
+    - Around the Horn
+    - Pardon the Interruption
