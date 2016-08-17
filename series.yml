@@ -38,8 +38,7 @@ series:
     - Louie:
         path: "/media/TV Shows/Louie (2010)/Season {{ series_season }}/" 
     - Mad Men
-    - Mr. Robot:
-      from_group: NTb
+    - Mr. Robot
     - Parks and Recreation
     - Sherlock
     - South Park
