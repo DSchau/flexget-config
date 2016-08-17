@@ -24,6 +24,9 @@ series:
       quality: 720p webdl+
     espn:
       from_group: ESPNtb
+    misc:
+      from_group:
+        - NTb
   favorites:
     - Archer:
         path: "/media/TV Shows/Archer (2009)/Season {{ series_season }}/"
@@ -62,6 +65,7 @@ series:
     - Hannibal
     - Fear the Walking Dead
     - Nathan for You
+  misc:
     - Bachelor in Paradise
   espn:
     - Around the Horn
