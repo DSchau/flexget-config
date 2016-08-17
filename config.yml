@@ -22,7 +22,7 @@ templates:
       days: 1
   torrent_server:
     transmission:
-      port: 9000
+      port: 9001
       username: '{{ secrets.user }}'
       password: '{{ secrets.password }}'
       path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
@@ -101,8 +101,8 @@ tasks:
     tmdb_lookup: yes
     accept_all: yes
     email:
-      from: '{{ secrets.email }}'
-      to: '{{ secrets.gmail.flexget-username }}'
+      from: '{{ secrets.gmail.email }}'
+      to: '{{ secrets.gmail.flexget }}'
       subject: Media Downloads
       template: html
       smtp_host: smtp.gmail.com

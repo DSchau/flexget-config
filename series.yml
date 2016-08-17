@@ -4,7 +4,7 @@ series:
       upgrade: yes
       qualities:
         - 720p webdl+
-        - 720p webrip+
+        # - 720p webrip+
         # - 720p hdtv
     hbo:
       from_group: 
@@ -12,9 +12,16 @@ series:
         - TxN
         - DON
         - CtrlHD
-        - BATV # John Oliver
-    new:
+        - NORMIES # Silicon Valley
+        - doosh # John Oliver
+        - NorTV # Silicon Valley
+        - SNEAkY # True Detective
       quality: 720p hdtv+
+    animation:
+      from_group:
+        - iT00NZ
+    new:
+      quality: 720p webdl+
     espn:
       from_group: ESPNtb
   favorites:
@@ -31,10 +38,9 @@ series:
     - Parks and Recreation
     - Sherlock
     - South Park
-    - Suits
     - The League
     - The Walking Dead
-    - Workaholics
+    - Review
   hbo:
     - Game of Thrones
     - True Detective
@@ -42,17 +48,21 @@ series:
     - Boardwalk Empire
     - Silicon Valley
     - Last Week Tonight With John Oliver
+  animation:
+    - Rick and Morty
   new:
     - Anthony Bourdain - Parts Unknown
     - The Soup
     - Vice
     - Hard Knocks:
         path: "/media/TV Shows/Hard Knocks (2001)"
-    - Gotham
     - Brooklyn Nine-Nine
     - Better Call Saul
-    - The Eric Andrew Show
     - Trailer Park Boys
+    - Hannibal
+    - Fear the Walking Dead
+    - Nathan for You
+    - Bachelor in Paradise
   espn:
     - Around the Horn
     - Pardon the Interruption
