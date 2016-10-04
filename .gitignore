@@ -1,0 +1,8 @@
+# private folders
+.cookies/
+.rss/
+
+# private files
+*.log
+*.sqlite
+secrets.yml
