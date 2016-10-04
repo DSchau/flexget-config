@@ -1,10 +1,15 @@
 secrets: secrets.yml
 
 schedules:
-  # Run every task every 30 minutes
+  # Run RSS lookup task(s) every 30 minutes
   - tasks: [ broadcasthenet,tvt ]
     schedule:
       minute: "*/30"
+  # Run email task every night at 10:00 PM
+  - tasks: [ emailfeed ]
+    schedule:
+      hour: 22
+      minute: 0
 
 templates:
   global:
@@ -18,6 +23,7 @@ templates:
     cookies: ~/.flexget/.cookies/cookies.sqlite
   rssout:
     make_rss:
+      encoding: utf-8
       file: ~/.flexget/.rss/downloads.rss
       days: 1
   torrent_server:
@@ -26,6 +32,17 @@ templates:
       username: '{{ secrets.user }}'
       password: '{{ secrets.password }}'
       path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
+  transmission_lookup:
+    disable: builtins
+    metainfo_series: yes
+    thetvdb_lookup: yes
+    imdb_lookup: yes
+    tmdb_lookup: yes
+    from_transmission:
+      port: 9001
+      username: '{{ secrets.user }}'
+      password: '{{ secrets.password }}'
+      onlycomplete: yes
   tv:
     template: [ torrent_server ]
     include: [ series.yml ]
@@ -37,12 +54,12 @@ templates:
 
 tasks:
   broadcasthenet:
-#    discover:
-#      what:
-#        - emit_series: yes
-#      from:
-#        - btn: '{{ btn }}'
-    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
+    discover:
+      what:
+        - next_series_episodes: yes
+      from:
+        - btn: 0780efad4f66edb1617bce8818a504d4
+    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     thetvdb_lookup: yes
     priority: 1
@@ -66,7 +83,8 @@ tasks:
   movie_queue_imdb:
     priority: 3
     imdb_list:
-      user_id: ur17289715
+      login: '{{imdb.user_id}}'
+      password: '{{imdb.password}}'
       list: watchlist
     accept_all: yes
     # queue_movies:
@@ -95,7 +113,7 @@ tasks:
     rss:
       url: '/home/{{ secrets.user }}/.flexget/.rss/downloads.rss'
     disable: [ seen ]
-    metainfo_series: yes # required for tvdb lookup to work, email template to function correctly
+    metainfo_series: yes
     thetvdb_lookup: yes
     imdb_lookup: yes
     tmdb_lookup: yes
@@ -104,7 +122,7 @@ tasks:
       from: '{{ secrets.gmail.email }}'
       to: '{{ secrets.gmail.flexget }}'
       subject: Media Downloads
-      template: html
+      template: html-custom
       smtp_host: smtp.gmail.com
       smtp_port: 587
       smtp_username: '{{ secrets.gmail.username }}'

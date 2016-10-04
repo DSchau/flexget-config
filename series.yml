@@ -3,8 +3,7 @@ series:
     favorites:
       upgrade: yes
       qualities:
-        - 720p webdl+
-        # - 720p webrip+
+        - 720p webrip+
         # - 720p hdtv
     hbo:
       from_group: 
@@ -21,7 +20,7 @@ series:
       from_group:
         - iT00NZ
     new:
-      quality: 720p webdl+
+      quality: 720p hdtv+
     espn:
       from_group: ESPNtb
     misc:
@@ -30,6 +29,7 @@ series:
   favorites:
     - Archer:
         path: "/media/TV Shows/Archer (2009)/Season {{ series_season }}/"
+    - Better Call Saul
     - Broad City
     - Fargo
     - Homeland
@@ -56,16 +56,16 @@ series:
     - Rick and Morty
   new:
     - Anthony Bourdain - Parts Unknown
-    - The Soup
-    - Vice
     - Hard Knocks:
         path: "/media/TV Shows/Hard Knocks (2001)"
     - Brooklyn Nine-Nine
-    - Better Call Saul
     - Trailer Park Boys
     - Hannibal
     - Fear the Walking Dead
     - Nathan for You
+    - Atlanta
+    - Westworld
+    - Saturday Night Live
   misc:
     - Bachelor in Paradise
   espn:
