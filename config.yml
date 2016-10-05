@@ -59,7 +59,8 @@ tasks:
       what:
         - next_series_episodes: yes
       from:
-        - btn: 0780efad4f66edb1617bce8818a504d4
+        - btn: '{{secrets.btn.apikey}}'
+    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     priority: 1
 
