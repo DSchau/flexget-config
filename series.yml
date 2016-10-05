@@ -3,7 +3,7 @@ series:
     favorites:
       upgrade: yes
       qualities:
-        - 720p webrip+
+        - 720p webdl+
         # - 720p hdtv
     hbo:
       from_group: 
@@ -15,7 +15,8 @@ series:
         - doosh # John Oliver
         - NorTV # Silicon Valley
         - SNEAkY # True Detective
-      quality: 720p hdtv+
+      qualities:
+        - 720p webrip+
     animation:
       from_group:
         - iT00NZ
@@ -33,23 +34,20 @@ series:
     - Broad City
     - Fargo
     - Homeland
-    - It's Always Sunny in Philadelphia
+    - It's Always Sunny in Philadelphia:
+        path: "/media/TV Shows/It's Always Sunny in Philadelphia/Season {{ series_season }}/"
     - Justified
     - Louie:
         path: "/media/TV Shows/Louie (2010)/Season {{ series_season }}/" 
-    - Mad Men
     - Mr. Robot
     - Parks and Recreation
     - Sherlock
     - South Park
-    - The League
     - The Walking Dead
     - Review
   hbo:
     - Game of Thrones
     - True Detective
-    - Eastbound and Down
-    - Boardwalk Empire
     - Silicon Valley
     - Last Week Tonight With John Oliver
   animation:
@@ -59,15 +57,18 @@ series:
     - Hard Knocks:
         path: "/media/TV Shows/Hard Knocks (2001)"
     - Brooklyn Nine-Nine
-    - Trailer Park Boys
-    - Hannibal
     - Fear the Walking Dead
     - Nathan for You
     - Atlanta
     - Westworld
-    - Saturday Night Live
+    - Saturday Night Live:
+        identified_by: ep
+      Westworld:
+        identified_by: ep
   misc:
     - Bachelor in Paradise
   espn:
-    - Around the Horn
-    - Pardon the Interruption
+    - Around the Horn:
+        identified_by: ep
+    - Pardon the Interruption:
+        identified_by: ep

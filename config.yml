@@ -1,8 +1,8 @@
 secrets: secrets.yml
 
 schedules:
-  # Run RSS lookup task(s) every 30 minutes
-  - tasks: [ broadcasthenet,tvt ]
+  # Run TV lookup task(s) every 30 minutes
+  - tasks: 'series-*'
     schedule:
       minute: "*/30"
   # Run email task every night at 10:00 PM
@@ -46,6 +46,7 @@ templates:
   tv:
     template: [ torrent_server ]
     include: [ series.yml ]
+    thetvdb_lookup: yes
   size_limit: 
     content_size:
       min: 150
@@ -53,21 +54,18 @@ templates:
       strict: no
 
 tasks:
-  broadcasthenet:
+  series-btn:
     discover:
       what:
         - next_series_episodes: yes
       from:
         - btn: 0780efad4f66edb1617bce8818a504d4
-    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
-    thetvdb_lookup: yes
     priority: 1
 
-  tvt:
+  series-freshon:
     rss: 'http://freshon.tv/rss.php?feed=dl'
     template: [ tv, size_limit, rssout ]
-    thetvdb_lookup: yes
     priority: 2
 
   tv_manual:

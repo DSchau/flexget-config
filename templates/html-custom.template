@@ -77,19 +77,21 @@ a[x-apple-data-detectors] {
             <img src="{{show.tvdb_posters[0]}}" style="border: 0; height: auto; max-width: 100%; line-height: 100%; outline: none; text-decoration: none; max-height: 200px; display: block; margin: 0 auto; border-radius: 4px;">
           </div>
           <div class="details" style="min-height: 160px; border-top: 2px solid rgba(77,77,77,0.25); background: linear-gradient(rgba(77,77,77,0.15), rgba(77,77,77,0) 60%); padding: 0 5px; padding-bottom: 20px;">
-            <h1 class="title" style="text-transform: capitalize; font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; color: #131313; font-size: 35px; font-weight: 700; margin: 0; padding: 0; margin-top: -40px; margin-bottom: -10px; width: 100%; white-space: nowrap;">{{show_name}}</h1>
-            {# <h2 class="year" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">({{show.tvdb_first_air_date|formatdate('%Y')}})</h2> #}
-            <h2 class="episode-title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">{{show.tvdb_ep_name}}</h2>
-            <h3 class="episode-season" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">Season {{show.tvdb_season}}, Episode {{show.tvdb_episode}}</h3>
-            <h3 class="air-date" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">{{show.tvdb_ep_air_date|formatdate('%b %d, %Y')}}</h3>
-            <h3 class="episode-rating" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400; font-size: 1rem;">
-              {% for star in range(stars) %}
-                &#9733;
-              {% endfor %}
-              {% for star in range(stars_empty) %}
-                <span class="empty" style="color: #a6a6a6;">&#9733;</span>
-              {% endfor %}
-            </h3>
+            <h1 class="title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; color: #131313; font-size: 35px; text-overflow: ellipsis; font-weight: 700; padding: 0; margin: 0; top: -40px; margin-bottom: -10px; white-space: nowrap; overflow-x: hidden; position: relative;">{{show_name}}</h1>
+            <div class="shift" style="position: relative; top: -40px;">
+              {# <h2 class="year" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">({{show.tvdb_first_air_date|formatdate('%Y')}})</h2> #}
+              <h2 class="episode-title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">{{show.tvdb_ep_name}}</h2>
+              <h3 class="episode-season" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">Season {{show.tvdb_season}}, Episode {{show.tvdb_episode}}</h3>
+              <h3 class="air-date" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">{{show.tvdb_ep_air_date|formatdate('%b %d, %Y')}}</h3>
+              <h3 class="episode-rating" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400; font-size: 1rem;">
+                {% for star in range(stars) %}
+                  &#9733;
+                {% endfor %}
+                {% for star in range(stars_empty) %}
+                  <span class="empty" style="color: #a6a6a6;">&#9733;</span>
+                {% endfor %}
+              </h3>
+            </div>
             <p class="description clear" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color: #131313; Margin-bottom: 15px; clear: both; line-height: 24px;">{{show.tvdb_ep_overview}}</p>
           </div>
         </section>
