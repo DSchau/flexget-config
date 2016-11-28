@@ -26,11 +26,11 @@
 
 <!doctype html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flexget Newsletter</title>
-<style type="text/css">body, table, td, a {
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Flexget Newsletter</title>
+  <style type="text/css">body, table, td, a {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
 
@@ -55,59 +55,81 @@ a[x-apple-data-detectors] {
       padding: 0 5px; }
   .spacer .message {
     max-width: 85%; } }
-</style></head><body style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; width: 100%;">
-  <div class="container" style="background-color: rgba(0,0,51,0.1); display: block; Margin: 0 auto; max-width: 580px; width: auto;">
-    <div class="spacer" style="width: 100%; height: 150px; text-align: center; display: table; background: linear-gradient(90deg,#c2e59c,#64b3f4); border-bottom: 2px solid white;">
-      <div class="vertical-center" style="display: table-cell; vertical-align: middle; margin-top: -20px;">
-        <h3 class="message" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; margin: 0 auto; color: white; font-size: 24px; line-height: 36px; border-top: 1px solid rgba(255,255,255,0.25); border-bottom: 1px solid rgba(255,255,255,0.25);">What you may have missed&hellip;</h3>
-      </div>
-    </div>
-    <div class="shows" style="padding-top: 50px;">
-      {% for show in tv_shows %}
-        {% set show_name = show.tvdb_series_name|d(show.series_name) %}
-        {% set stars = (show.tvdb_ep_rating|int / 2)|round|int %}
-        {% set stars_empty = (5 - stars) %}
-        {% set first = loop.index == 1 %}
-        {% set last = loop.index == tv_shows|length %}
-        {% set even = loop.index % 2 == 0 %}
-        {# {% set last = loop.index == (tv_shows|length and tv_shows|length > 1) %} #}
+</style></head>
+  <body class="" style="background-color: #f6f6f6; width: 100%; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0; padding: 0;">
+      <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+        <tr>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
+          <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: auto;" width="580" valign="top">
+            <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px;">
+              <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #fff; border-radius: 3px;" width="100%">
+                <tr>
+                  <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+                      <tr>
+                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">
+                          <div class="container" style="display: block; Margin: 0 auto; max-width: 580px; width: auto;">
+                            <div class="spacer" style="width: 100%; height: 150px; text-align: center; display: table; background: linear-gradient(90deg,#c2e59c,#64b3f4); border-bottom: 2px solid white;">
+                              <div class="vertical-center" style="display: table-cell; vertical-align: middle; margin-top: -20px;">
+                                <h3 class="message" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; margin: 0 auto; color: white; font-size: 24px; line-height: 36px; border-top: 1px solid rgba(255,255,255,0.25); border-bottom: 1px solid rgba(255,255,255,0.25);">What you may have missed&hellip;</h3>
+                              </div>
+                            </div>
+                            <div class="shows" style="padding-top: 50px;">
+                              {% for show in tv_shows %}
+                                {% set show_name = show.tvdb_series_name|d(show.series_name) %}
+                                {% set stars = (show.tvdb_ep_rating|int / 2)|round|int %}
+                                {% set stars_empty = (5 - stars) %}
+                                {% set first = loop.index == 1 %}
+                                {% set last = loop.index == tv_shows|length %}
+                                {% set even = loop.index % 2 == 0 %}
+                                {# {% set last = loop.index == (tv_shows|length and tv_shows|length > 1) %} #}
 
-        <section class="episode {{ first and 'first' or ''}} {{ last and 'last' or 'not-last' }} {{ even and 'even' or 'odd' }}" style="max-width: 95%; margin-left: auto; margin-right: auto; padding-top: 40px; padding: 5px 0;">
-          <div class="poster" style="float: left; margin-top: -40px; margin-right: 10px;">
-            <img src="{{show.tvdb_posters[0]}}" style="border: 0; height: auto; max-width: 100%; line-height: 100%; outline: none; text-decoration: none; max-height: 200px; display: block; margin: 0 auto; border-radius: 4px;">
-          </div>
-          <div class="details" style="min-height: 160px; border-top: 2px solid rgba(77,77,77,0.25); background: linear-gradient(rgba(77,77,77,0.15), rgba(77,77,77,0) 60%); padding: 0 5px; padding-bottom: 20px;">
-            <h1 class="title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; color: #131313; font-size: 35px; text-overflow: ellipsis; font-weight: 700; padding: 0; margin: 0; top: -40px; margin-bottom: -10px; white-space: nowrap; overflow-x: hidden; position: relative;">{{show_name}}</h1>
-            <div class="shift" style="position: relative; top: -40px;">
-              {# <h2 class="year" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">({{show.tvdb_first_air_date|formatdate('%Y')}})</h2> #}
-              <h2 class="episode-title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">{{show.tvdb_ep_name}}</h2>
-              <h3 class="episode-season" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">Season {{show.tvdb_season}}, Episode {{show.tvdb_episode}}</h3>
-              <h3 class="air-date" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">{{show.tvdb_ep_air_date|formatdate('%b %d, %Y')}}</h3>
-              <h3 class="episode-rating" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400; font-size: 1rem;">
-                {% for star in range(stars) %}
-                  &#9733;
-                {% endfor %}
-                {% for star in range(stars_empty) %}
-                  <span class="empty" style="color: #a6a6a6;">&#9733;</span>
-                {% endfor %}
-              </h3>
+                                <section class="episode {{ first and 'first' or ''}} {{ last and 'last' or 'not-last' }} {{ even and 'even' or 'odd' }}" style="max-width: 95%; margin-left: auto; margin-right: auto; padding-top: 40px; padding: 5px 0;">
+                                  <div class="poster" style="float: left; margin-top: -40px; margin-right: 10px;">
+                                    <img src="{{show.tvdb_posters[0]}}" style="border: 0; height: auto; max-width: 100%; line-height: 100%; outline: none; text-decoration: none; max-height: 200px; display: block; margin: 0 auto; border-radius: 4px;">
+                                  </div>
+                                  <div class="details" style="min-height: 160px; border-top: 2px solid rgba(77,77,77,0.25); background: linear-gradient(rgba(77,77,77,0.15), rgba(77,77,77,0) 60%); padding: 0 5px; padding-bottom: 20px;">
+                                    <h1 class="title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; color: #131313; font-size: 35px; text-overflow: ellipsis; font-weight: 700; padding: 0; margin: 0; top: -40px; margin-bottom: -10px; white-space: nowrap; overflow-x: hidden; position: relative;">{{show_name}}</h1>
+                                    <div class="shift" style="position: relative; top: -40px;">
+                                      {# <h2 class="year" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">({{show.tvdb_first_air_date|formatdate('%Y')}})</h2> #}
+                                      <h2 class="episode-title" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #313131; font-weight: 400;">{{show.tvdb_ep_name}}</h2>
+                                      <h3 class="episode-season" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">Season {{show.tvdb_season}}, Episode {{show.tvdb_episode}}</h3>
+                                      <h3 class="air-date" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400;">{{show.tvdb_ep_air_date|formatdate('%b %d, %Y')}}</h3>
+                                      <h3 class="episode-rating" style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; color: #363636; font-weight: 400; font-size: 1rem;">
+                                        {% for star in range(stars) %}
+                                          &#9733;
+                                        {% endfor %}
+                                        {% for star in range(stars_empty) %}
+                                          <span class="empty" style="color: #a6a6a6;">&#9733;</span>
+                                        {% endfor %}
+                                      </h3>
+                                    </div>
+                                    <p class="description clear" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color: #131313; Margin-bottom: 15px; clear: both; line-height: 24px;">{{show.tvdb_ep_overview}}</p>
+                                  </div>
+                                </section>
+                              {% endfor %} <!-- end shows -->
+                            </div>
+
+                            {% for movie in movies %}
+                              <section class="movie content" style="max-width: 95%; margin-left: auto; margin-right: auto; padding-top: 40px; padding: 5px 0;"></section>
+                            {% endfor %} <!-- end movies -->
+
+                            <div class="footer clear" style="clear: both; text-align: center; padding: 5px 0; border-top: 2px solid white; background-color: rgba(0,0,0,0.45); color: white; font-size: 16px; min-height: 50px; line-height: 25px;">
+                              {% set plural = tv_shows|length > 1 and '(s)' or '' %}
+                              <h4 style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; font-weight: 400;">{{ tv_shows|length }} item{{plural}} downloaded</h4>
+                              <h5 class="sub" style="margin: 0; font-weight: normal; font-size: 12px;">(Sent by Flexget)</h5>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </div>
-            <p class="description clear" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color: #131313; Margin-bottom: 15px; clear: both; line-height: 24px;">{{show.tvdb_ep_overview}}</p>
-          </div>
-        </section>
-      {% endfor %} <!-- end shows -->
-    </div>
-
-    {% for movie in movies %}
-      <section class="movie content" style="max-width: 95%; margin-left: auto; margin-right: auto; padding-top: 40px; padding: 5px 0;"></section>
-    {% endfor %} <!-- end movies -->
-
-    <div class="footer clear" style="clear: both; text-align: center; padding: 5px 0; border-top: 2px solid white; background-color: rgba(0,0,0,0.45); color: white; font-size: 16px; min-height: 50px; line-height: 25px;">
-      {% set plural = tv_shows|length > 1 and '(s)' or '' %}
-      <h4 style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; margin: 0; font-weight: 400;">{{ tv_shows|length }} item{{plural}} downloaded</h4>
-      <h5 class="sub" style="margin: 0; font-weight: normal; font-size: 12px;">(Sent by Flexget)</h5>
-    </div>
-  </div>
-</body>
+          </td>
+        </tr>
+      </table>
+  </body>
 </html>
 {% endif %}

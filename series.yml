@@ -13,15 +13,20 @@ series:
         - CtrlHD
         - NORMIES # Silicon Valley
         - doosh # John Oliver
+        - BTW # John Oliver
+        - BATV # John Oliver
         - NorTV # Silicon Valley
-        - SNEAkY # True Detective
+        - monkee # Westworld
       qualities:
+        - 720p hdtv+
         - 720p webrip+
     animation:
       from_group:
         - iT00NZ
     new:
-      quality: 720p hdtv+
+        qualities:
+        - 720p hdtv+
+        - 720p webrip+
     espn:
       from_group: ESPNtb
     misc:
@@ -50,6 +55,7 @@ series:
     - True Detective
     - Silicon Valley
     - Last Week Tonight With John Oliver
+    - Westworld
   animation:
     - Rick and Morty
   new:
@@ -60,11 +66,8 @@ series:
     - Fear the Walking Dead
     - Nathan for You
     - Atlanta
-    - Westworld
-    - Saturday Night Live:
-        identified_by: ep
-      Westworld:
-        identified_by: ep
+    - Saturday Night Live
+    - Planet Earth II
   misc:
     - Bachelor in Paradise
   espn:

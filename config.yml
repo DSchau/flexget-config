@@ -55,12 +55,7 @@ templates:
 
 tasks:
   series-btn:
-    discover:
-      what:
-        - next_series_episodes: yes
-      from:
-        - btn: '{{secrets.btn.apikey}}'
-    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
+    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     priority: 1
 
@@ -69,7 +64,7 @@ tasks:
     template: [ tv, size_limit, rssout ]
     priority: 2
 
-  tv_manual:
+  series_manual:
     template: [ torrent_server, rssout ]
     transmission:
       addpaused: yes
@@ -79,7 +74,7 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  movie_queue_imdb:
+  movies-imdb:
     priority: 3
     imdb_list:
       login: '{{imdb.user_id}}'
