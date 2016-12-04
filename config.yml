@@ -20,15 +20,15 @@ templates:
         - '*.mp4'
         - '*.mp3'
         - '*.aac'
-    cookies: ~/.flexget/.cookies/cookies.sqlite
+    cookies: /home/dschau/.flexget/.cookies/cookies.sqlite
   rssout:
     make_rss:
       encoding: utf-8
-      file: ~/.flexget/.rss/downloads.rss
+      file: /home/dschau/.flexget/.rss/downloads.rss
       days: 1
   torrent_server:
     transmission:
-      port: 9001
+      port: 9091
       username: '{{ secrets.user }}'
       password: '{{ secrets.password }}'
       path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
@@ -39,7 +39,7 @@ templates:
     imdb_lookup: yes
     tmdb_lookup: yes
     from_transmission:
-      port: 9001
+      port: 9091
       username: '{{ secrets.user }}'
       password: '{{ secrets.password }}'
       onlycomplete: yes
@@ -105,7 +105,7 @@ tasks:
 
   emailfeed:
     rss:
-      url: '/home/{{ secrets.user }}/.flexget/.rss/downloads.rss'
+      url: '/home/dschau/.flexget/.rss/downloads.rss'
     disable: [ seen ]
     metainfo_series: yes
     thetvdb_lookup: yes
