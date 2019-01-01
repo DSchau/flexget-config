@@ -125,4 +125,5 @@ tasks:
               smtp_port: 587
               smtp_username: '{? gmail.username ?}'
               smtp_password: '{? gmail.password ?}'
+              smtp_tls: yes
               html: yes
