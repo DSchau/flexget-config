@@ -5,6 +5,11 @@ schedules:
   - tasks: 'series-*'
     schedule:
       minute: "*/30"
+  # Run email task every night at 10:00 PM
+  - tasks: [ emailfeed ]
+    schedule:
+      hour: 22
+      minute: 0
 
 templates:
   global:
@@ -113,12 +118,11 @@ tasks:
       task:
         template: html-custom
         via:
-          email:
-            from: '{? gmail.email ?}'
-            to: '{? gmail.flexget ?}'
-            subject: Media Downloads
-            smtp_host: smtp.gmail.com
-            smtp_port: 587
-            smtp_username: '{? gmail.username ?}'
-            smtp_password: '{? gmail.password ?}'
-            html: yes
+          - email:
+              from: '{? gmail.email ?}'
+              to: '{? gmail.flexget ?}'
+              smtp_host: smtp.gmail.com
+              smtp_port: 587
+              smtp_username: '{? gmail.username ?}'
+              smtp_password: '{? gmail.password ?}'
+              html: yes
