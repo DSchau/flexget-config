@@ -1,4 +1,4 @@
-secrets: secrets.yml
+variables: secrets.yml
 
 schedules:
   # Run TV lookup task(s) every 30 minutes
@@ -29,8 +29,8 @@ templates:
   torrent_server:
     transmission:
       port: 9091
-      username: '{{ secrets.user }}'
-      password: '{{ secrets.password }}'
+      username: '{? user ?}'
+      password: '{? password ?}'
       path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
   transmission_lookup:
     disable: builtins
@@ -40,13 +40,14 @@ templates:
     tmdb_lookup: yes
     from_transmission:
       port: 9091
-      username: '{{ secrets.user }}'
-      password: '{{ secrets.password }}'
+      username: '{? user ?}'
+      password: '{? secrets.password ?}'
       onlycomplete: yes
   tv:
     template: [ torrent_server ]
     include: [ series.yml ]
     thetvdb_lookup: yes
+    digest: daily email
   size_limit: 
     content_size:
       min: 150
@@ -55,14 +56,16 @@ templates:
 
 tasks:
   series-btn:
-    rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
+    discover:
+      what: 
+        - next_series_episodes: yes
+      from:
+        - btn: '{? btn.apikey ?}'
+      release_estimations: loose
+    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     priority: 1
-
-  series-freshon:
-    rss: 'http://freshon.tv/rss.php?feed=dl'
-    template: [ tv, size_limit, rssout ]
-    priority: 2
+    max_reruns: 3
 
   series_manual:
     template: [ torrent_server, rssout ]
@@ -74,16 +77,16 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  movies-imdb:
-    priority: 3
-    imdb_list:
-      login: '{{imdb.user_id}}'
-      password: '{{imdb.password}}'
-      list: watchlist
-    accept_all: yes
-    # queue_movies:
-    #   quality: 720p bluray
-    manual: yes
+  # movies-imdb:
+  # priority: 3
+  # imdb_list:
+  #   login: '{{imdb.user_id}}'
+  #   password: '{{imdb.password}}'
+  #   list: watchlist
+  #  accept_all: yes
+  # # queue_movies:
+  #  #   quality: 720p bluray
+  #  manual: yes
 
   movies_manual:
     template: [ torrent_server, rssout ]
@@ -103,22 +106,24 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  emailfeed:
-    rss:
-      url: '/home/dschau/.flexget/.rss/downloads.rss'
-    disable: [ seen ]
-    metainfo_series: yes
-    thetvdb_lookup: yes
-    imdb_lookup: yes
-    tmdb_lookup: yes
-    accept_all: yes
-    email:
-      from: '{{ secrets.gmail.email }}'
-      to: '{{ secrets.gmail.flexget }}'
-      subject: Media Downloads
-      template: html-custom
-      smtp_host: smtp.gmail.com
-      smtp_port: 587
-      smtp_username: '{{ secrets.gmail.username }}'
-      smtp_password: '{{ secrets.gmail.password }}'
-      smtp_tls: yes
+  #  emailfeed:
+  #  interval: 1 days
+  #  emit_digest:
+  #    list: daily email
+  #  seen: local
+  #  metainfo_series: yes
+  #  thetvdb_lookup: yes
+  #  imdb_lookup: yes
+  #  tmdb_lookup: yes
+  #  accept_all: yes
+  #  email:
+  #    from: '{{ secrets.gmail.email }}'
+  #   to: '{{ secrets.gmail.flexget }}'
+  #   subject: Media Downloads
+  #   template: html-custom
+  #   smtp_host: smtp.gmail.com
+  #   smtp_port: 587
+  #   smtp_username: '{{ secrets.gmail.username }}'
+  #   smtp_password: '{{ secrets.gmail.password }}'
+  #   smtp_tls: yes
+

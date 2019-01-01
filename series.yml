@@ -1,16 +1,15 @@
 series:
   settings:
     favorites:
-      upgrade: yes
       qualities:
         - 720p webdl+
-        # - 720p hdtv
     hbo:
       from_group: 
-        - NTb
+        - NTb # Curb
         - TxN
         - DON
         - CtrlHD
+        - GoT # Game of Thrones
         - NORMIES # Silicon Valley
         - doosh # John Oliver
         - BTW # John Oliver
@@ -18,17 +17,15 @@ series:
         - NorTV # Silicon Valley
         - monkee # Westworld
       qualities:
-        - 720p hdtv+
         - 720p webrip+
     animation:
       from_group:
         - iT00NZ
+        - monkee
+        - QOQ # Rick and Morty
     new:
         qualities:
-        - 720p hdtv+
-        - 720p webrip+
-    espn:
-      from_group: ESPNtb
+          - 720p hdtv+
     misc:
       from_group:
         - NTb
@@ -44,7 +41,6 @@ series:
     - Justified
     - Louie:
         path: "/media/TV Shows/Louie (2010)/Season {{ series_season }}/" 
-    - Mr. Robot
     - Parks and Recreation
     - Sherlock
     - South Park
@@ -56,6 +52,7 @@ series:
     - Silicon Valley
     - Last Week Tonight With John Oliver
     - Westworld
+    - Curb your Enthusiasm
   animation:
     - Rick and Morty
   new:
@@ -67,10 +64,11 @@ series:
     - Nathan for You
     - Atlanta
     - Saturday Night Live
+    - The Bachelor
+    - The Bachelorette
+    - Taboo
+    - Prison Break
+    - Who is America
   misc:
     - Bachelor in Paradise
-  espn:
-    - Around the Horn:
-        identified_by: ep
-    - Pardon the Interruption:
-        identified_by: ep
+      
