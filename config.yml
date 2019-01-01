@@ -5,11 +5,6 @@ schedules:
   - tasks: 'series-*'
     schedule:
       minute: "*/30"
-  # Run email task every night at 10:00 PM
-  - tasks: [ emailfeed ]
-    schedule:
-      hour: 22
-      minute: 0
 
 templates:
   global:
@@ -62,7 +57,6 @@ tasks:
       from:
         - btn: '{? btn.apikey ?}'
       release_estimations: loose
-    # rss: 'https://broadcasthe.net/feeds.php?feed=torrents_episode&user={{secrets.btn.user}}&auth={{secrets.btn.auth}}&passkey={{secrets.btn.passkey}}&authkey={{secrets.btn.authkey}}'
     template: [ tv, size_limit, rssout ]
     priority: 1
     max_reruns: 3
@@ -106,24 +100,19 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  #  emailfeed:
-  #  interval: 1 days
-  #  emit_digest:
-  #    list: daily email
-  #  seen: local
-  #  metainfo_series: yes
-  #  thetvdb_lookup: yes
-  #  imdb_lookup: yes
-  #  tmdb_lookup: yes
-  #  accept_all: yes
-  #  email:
-  #    from: '{{ secrets.gmail.email }}'
-  #   to: '{{ secrets.gmail.flexget }}'
-  #   subject: Media Downloads
-  #   template: html-custom
-  #   smtp_host: smtp.gmail.com
-  #   smtp_port: 587
-  #   smtp_username: '{{ secrets.gmail.username }}'
-  #   smtp_password: '{{ secrets.gmail.password }}'
-  #   smtp_tls: yes
-
+  daily-email:
+    interval: 1 days
+    emit_digest:
+      list: daily email
+    seen: local
+    accept_all: yes
+    email:
+      from: '{? gmail.email ?}'
+      to: '{? gmail.flexget ?}'
+      subject: Media Downloads
+      template: html-custom
+      smtp_host: smtp.gmail.com
+      smtp_port: 587
+      smtp_username: '{? gmail.username ?}'
+      smtp_password: '{? gmail.password ?}'
+      smtp_tls: yes
