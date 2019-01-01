@@ -100,25 +100,25 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  # emailfeed:
-  #   rss:
-  #     url: '/home/dschau/.flexget/.rss/downloads.rss'
-  #   disable: [ seen ]
-  #   metainfo_series: yes
-  #   thetvdb_lookup: yes
-  #   imdb_lookup: yes
-  #   tmdb_lookup: yes
-  #   accept_all: yes
-  #   notify:
-  #     email:
-  #       template: html-custom
-  #       via:
-  #         - email:
-  #             from: '{? gmail.email ?}'
-  #             to: '{? gmail.flexget ?}'
-  #             subject: Media Downloads
-  #             smtp_host: smtp.gmail.com
-  #             smtp_port: 587
-  #             smtp_username: '{? gmail.username ?}'
-  #             smtp_password: '{? gmail.password ?}'
-  #             html: yes
+  emailfeed:
+    rss:
+      url: '/home/dschau/.flexget/.rss/downloads.rss'
+    disable: [ seen ]
+    metainfo_series: yes
+    thetvdb_lookup: yes
+    imdb_lookup: yes
+    tmdb_lookup: yes
+    accept_all: yes
+    notify:
+      task:
+        template: html-custom
+        via:
+          - email:
+              from: '{? gmail.email ?}'
+              to: '{? gmail.flexget ?}'
+              subject: Media Downloads
+              smtp_host: smtp.gmail.com
+              smtp_port: 587
+              smtp_username: '{? gmail.username ?}'
+              smtp_password: '{? gmail.password ?}'
+              html: yes
