@@ -109,8 +109,8 @@ tasks:
     imdb_lookup: yes
     tmdb_lookup: yes
     accept_all: yes
-    notify_task:
-      to:
+    notify:
+      via:
         - email:
             from: '{? gmail.email ?}'
             to: '{? gmail.flexget ?}'
