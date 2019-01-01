@@ -100,19 +100,23 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  daily-email:
-    interval: 1 days
-    emit_digest:
-      list: daily email
-    seen: local
+  emailfeed:
+    rss:
+      url: '/home/dschau/.flexget/.rss/downloads.rss'
+    disable: [ seen ]
+    metainfo_series: yes
+    thetvdb_lookup: yes
+    imdb_lookup: yes
+    tmdb_lookup: yes
     accept_all: yes
-    email:
-      from: '{? gmail.email ?}'
-      to: '{? gmail.flexget ?}'
-      subject: Media Downloads
-      template: html-custom
-      smtp_host: smtp.gmail.com
-      smtp_port: 587
-      smtp_username: '{? gmail.username ?}'
-      smtp_password: '{? gmail.password ?}'
-      smtp_tls: yes
+    notify_task:
+      to:
+        - email:
+            from: '{? gmail.email ?}'
+            to: '{? gmail.flexget ?}'
+            subject: Media Downloads
+            template: html-custom
+            smtp_host: smtp.gmail.com
+            smtp_port: 587
+            smtp_username: '{? gmail.username ?}'
+            smtp_password: '{? gmail.password ?}'
