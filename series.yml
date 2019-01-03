@@ -16,6 +16,7 @@ series:
         - BATV # John Oliver
         - NorTV # Silicon Valley
         - monkee # Westworld
+        - AMZN
       qualities:
         - 720p webrip+
     animation:
@@ -53,6 +54,7 @@ series:
     - Last Week Tonight With John Oliver
     - Westworld
     - Curb your Enthusiasm
+    - Barry
   animation:
     - Rick and Morty
   new:
