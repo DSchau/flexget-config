@@ -5,7 +5,7 @@ series:
         - 720p webdl+
     hbo:
       from_group: 
-        - NTb # Curb
+        - NTb # Curb, Chernobyl
         - TxN
         - DON
         - CtrlHD
@@ -33,7 +33,6 @@ series:
   favorites:
     - Archer:
         path: "/media/TV Shows/Archer (2009)/Season {{ series_season }}/"
-    - Better Call Saul
     - Broad City
     - Fargo
     - Homeland
@@ -45,7 +44,6 @@ series:
     - Parks and Recreation
     - Sherlock
     - South Park
-    - The Walking Dead
     - Review
   hbo:
     - Game of Thrones
@@ -55,6 +53,9 @@ series:
     - Westworld
     - Curb your Enthusiasm
     - Barry
+    - The Case Against Adnan Syed
+    - Watchmen
+    - Chernobyl
   animation:
     - Rick and Morty
   new:
@@ -62,7 +63,6 @@ series:
     - Hard Knocks:
         path: "/media/TV Shows/Hard Knocks (2001)"
     - Brooklyn Nine-Nine
-    - Fear the Walking Dead
     - Nathan for You
     - Atlanta
     - Saturday Night Live
@@ -71,6 +71,9 @@ series:
     - Taboo
     - Prison Break
     - Who is America
-  misc:
+    - The ABC Murders
+    - The Walking Dead
+    - The Sinner
+    - What We Do in the Shadows
     - Bachelor in Paradise
-      
+
