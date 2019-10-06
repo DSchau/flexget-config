@@ -6,3 +6,7 @@
 *.log
 *.sqlite
 secrets.yml
+
+# lock files
+.config-lock
+received

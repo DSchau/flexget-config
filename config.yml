@@ -75,11 +75,11 @@ tasks:
     manual: yes
 
   movies_queue:
-    priority: 3
+    priority: 1
     digest: daily email
     imdb_lookup: yes
     csv:
-      url: https://docs.google.com/spreadsheets/d/1vaVASdhTMaxsX1Y9PQWVSj94fvyDfCi0FNhS0DDp3SA/gviz/tq?tqx=out:csv&sheet=Movies
+      url: '{? csv.movies ?}'
       values:
         title: 1
         url: 1
@@ -90,7 +90,7 @@ tasks:
     manual: yes
 
   movies_ptp:
-    priority: 4
+    priority: 2
     imdb_lookup: yes
     discover:
       what:
@@ -102,6 +102,7 @@ tasks:
             passkey: '{? ptp.passkey ?}'
     quality:
       - 720p bluray
+    digest: daily email
     transmission:
       port: 9091
       path: /media/Movies/
@@ -111,17 +112,6 @@ tasks:
     list_match:
       from:
         - movie_list: movie_queue
-
-  # movies-imdb:
-  # priority: 3
-  # imdb_list:
-  #   login: '{{imdb.user_id}}'
-  #   password: '{{imdb.password}}'
-  #   list: watchlist
-  #  accept_all: yes
-  # # queue_movies:
-  #  #   quality: 720p bluray
-  #  manual: yes
 
   movies_manual:
     template: [ torrent_server ]
