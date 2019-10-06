@@ -5,6 +5,10 @@ schedules:
   - tasks: 'series-*'
     schedule:
       minute: "*/30"
+  # Run Movie lookup task(s) every hour
+  - tasks: 'movies-*'
+    schedule:
+      minute: "*/60"
   # Run email task every night at 10:00 PM
   - tasks: [ daily_email ]
     schedule:
@@ -58,17 +62,55 @@ tasks:
         - btn: '{? btn.apikey ?}'
       release_estimations: loose
     digest: daily email
-    template: [ tv, size_limit, rssout ]
+    template: [ tv, size_limit ]
     priority: 1
     max_reruns: 3
 
   series_manual:
-    template: [ torrent_server, rssout ]
+    template: [ torrent_server ]
     accept_all: yes
     thetvdb_lookup: yes
     metainfo_series: yes
     disable: [ seen ]
     manual: yes
+
+  movies_queue:
+    priority: 3
+    digest: daily email
+    imdb_lookup: yes
+    csv:
+      url: https://docs.google.com/spreadsheets/d/1vaVASdhTMaxsX1Y9PQWVSj94fvyDfCi0FNhS0DDp3SA/gviz/tq?tqx=out:csv&sheet=Movies
+      values:
+        title: 1
+        url: 1
+    accept_all: yes
+    seen: local
+    list_add:
+      - movie_list: movie_queue
+    manual: yes
+
+  movies_ptp:
+    priority: 4
+    imdb_lookup: yes
+    discover:
+      what:
+        - movie_list: movie_queue
+      from:
+        - passthepopcorn:
+            username: '{? ptp.username ?}'
+            password: '{? ptp.password ?}'
+            passkey: '{? ptp.passkey ?}'
+    quality:
+      - 720p bluray
+    transmission:
+      port: 9091
+      path: /media/Movies/
+      username: '{? user ?}'
+      password: '{? password ?}'
+      add_paused: yes
+    list_match:
+      from:
+        - movie_list: movie_queue
 
   # movies-imdb:
   # priority: 3
@@ -82,7 +124,7 @@ tasks:
   #  manual: yes
 
   movies_manual:
-    template: [ torrent_server, rssout ]
+    template: [ torrent_server ]
     set:
       path: '/media/Movies'
     accept_all: yes
