@@ -6,7 +6,7 @@ schedules:
     schedule:
       minute: "*/30"
   # Run email task every night at 10:00 PM
-  - tasks: [ emailfeed ]
+  - tasks: [ daily_email ]
     schedule:
       hour: 22
       minute: 0
@@ -21,17 +21,13 @@ templates:
         - '*.mp3'
         - '*.aac'
     cookies: /home/dschau/.flexget/.cookies/cookies.sqlite
-  rssout:
-    make_rss:
-      encoding: utf-8
-      file: /home/dschau/.flexget/.rss/downloads.rss
-      days: 1
   torrent_server:
     transmission:
       port: 9091
       username: '{? user ?}'
       password: '{? password ?}'
-      path: '/media/TV Shows/{{ series_name }}/Season {{ series_season }}/'
+      path: '/media/TVShows/{{ series_name }}/Season {{ series_season }}/'
+      # add_paused: yes
   transmission_lookup:
     disable: builtins
     metainfo_series: yes
@@ -41,13 +37,12 @@ templates:
     from_transmission:
       port: 9091
       username: '{? user ?}'
-      password: '{? secrets.password ?}'
-      onlycomplete: yes
+      password: '{? password ?}'
+      only_complete: yes
   tv:
     template: [ torrent_server ]
     include: [ series.yml ]
     thetvdb_lookup: yes
-    digest: daily email
   size_limit: 
     content_size:
       min: 150
@@ -62,14 +57,13 @@ tasks:
       from:
         - btn: '{? btn.apikey ?}'
       release_estimations: loose
+    digest: daily email
     template: [ tv, size_limit, rssout ]
     priority: 1
     max_reruns: 3
 
   series_manual:
     template: [ torrent_server, rssout ]
-    transmission:
-      addpaused: yes
     accept_all: yes
     thetvdb_lookup: yes
     metainfo_series: yes
@@ -91,8 +85,6 @@ tasks:
     template: [ torrent_server, rssout ]
     set:
       path: '/media/Movies'
-    transmission:
-      addpaused: yes
     accept_all: yes
     disable: [ seen ]
     manual: yes
@@ -105,9 +97,11 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  emailfeed:
-    rss:
-      url: '/home/dschau/.flexget/.rss/downloads.rss'
+  daily_email:
+    interval: 1 days
+    from_digest:
+      list: daily email
+      restore_state: yes
     disable: [ seen ]
     metainfo_series: yes
     thetvdb_lookup: yes

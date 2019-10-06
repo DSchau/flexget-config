@@ -32,15 +32,15 @@ series:
         - NTb
   favorites:
     - Archer:
-        path: "/media/TV Shows/Archer (2009)/Season {{ series_season }}/"
+        path: "/media/TVShows/Archer (2009)/Season {{ series_season }}/"
     - Broad City
     - Fargo
     - Homeland
     - It's Always Sunny in Philadelphia:
-        path: "/media/TV Shows/It's Always Sunny in Philadelphia/Season {{ series_season }}/"
+        path: "/media/TVShows/It's Always Sunny in Philadelphia/Season {{ series_season }}/"
     - Justified
     - Louie:
-        path: "/media/TV Shows/Louie (2010)/Season {{ series_season }}/" 
+        path: "/media/TVShows/Louie (2010)/Season {{ series_season }}/" 
     - Parks and Recreation
     - Sherlock
     - South Park
@@ -61,7 +61,7 @@ series:
   new:
     - Anthony Bourdain - Parts Unknown
     - Hard Knocks:
-        path: "/media/TV Shows/Hard Knocks (2001)"
+        path: "/media/TVShows/Hard Knocks (2001)"
     - Brooklyn Nine-Nine
     - Nathan for You
     - Atlanta
