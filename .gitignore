@@ -10,3 +10,6 @@ secrets.yml
 # lock files
 .config-lock
 received
+
+# logs
+flexget.log*

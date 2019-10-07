@@ -6,9 +6,9 @@ schedules:
     schedule:
       minute: "*/30"
   # Run Movie lookup task(s) every hour
-  # - tasks: 'movie-*'
-  #   schedule:
-  #     minute: "*/60"
+  - tasks: 'movie-*'
+    schedule:
+      minute: "*/60"
   # Run email task every night at 10:00 PM
   - tasks: [ daily-email ]
     schedule:
@@ -87,9 +87,9 @@ tasks:
         title: 2
         url: 2
     accept_all: yes
+    seen: local
     list_add:
       - movie_list: movie_requests
-    manual: yes
 
   movie-ptp:
     priority: 2
@@ -99,7 +99,10 @@ tasks:
       add_paused: yes
     discover:
       what:
-        - movie_list: movie_queue
+        - limit:
+            amount: 50
+            from:
+              movie_list: movie_queue
       from:
         - passthepopcorn:
             username: '{? ptp.username ?}'
@@ -107,7 +110,7 @@ tasks:
             passkey: '{? ptp.passkey ?}'
             order_by: Seeders
     imdb_lookup: yes
-    torrent_alive: 25
+    torrent_alive: 10
     quality:
       - 720p bluray
     digest: daily email
