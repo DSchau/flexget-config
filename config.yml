@@ -10,7 +10,7 @@ schedules:
     schedule:
       minute: "*/60"
   # Run email task every night at 10:00 PM
-  - tasks: [ daily_email ]
+  - tasks: [ daily-email ]
     schedule:
       hour: 22
       minute: 0
@@ -31,7 +31,6 @@ templates:
       username: '{? user ?}'
       password: '{? password ?}'
       path: '/media/TVShows/{{ series_name }}/Season {{ series_season }}/'
-      # add_paused: yes
   transmission_lookup:
     disable: builtins
     metainfo_series: yes
@@ -54,7 +53,22 @@ templates:
       strict: no
 
 tasks:
+  series__manual:
+    thetvdb_lookup: yes
+    csv:
+      url: '{? csv.shows ?}'
+      values:
+        title: 1
+        url: 1
+        begin: 2
+    accept_all: yes
+    list_add:
+      - entry_list: entries
+    manual: yes
+
   series-btn:
+    template: [ tv, size_limit ]
+    priority: 1
     discover:
       what: 
         - next_series_episodes: yes
@@ -62,11 +76,9 @@ tasks:
         - btn: '{? btn.apikey ?}'
       release_estimations: loose
     digest: daily email
-    template: [ tv, size_limit ]
-    priority: 1
     max_reruns: 3
 
-  series_manual:
+  tv_manual:
     template: [ torrent_server ]
     accept_all: yes
     thetvdb_lookup: yes
@@ -74,9 +86,8 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  movies_queue:
+  movies-queue:
     priority: 1
-    digest: daily email
     imdb_lookup: yes
     csv:
       url: '{? csv.movies ?}'
@@ -84,13 +95,16 @@ tasks:
         title: 1
         url: 1
     accept_all: yes
-    seen: local
     list_add:
       - movie_list: movie_queue
     manual: yes
 
-  movies_ptp:
+  movies-ptp:
     priority: 2
+    template: [ torrent_server ]
+    set:
+      path: '/media/Movies'
+      add_paused: yes
     imdb_lookup: yes
     discover:
       what:
@@ -103,17 +117,11 @@ tasks:
     quality:
       - 720p bluray
     digest: daily email
-    transmission:
-      port: 9091
-      path: /media/Movies/
-      username: '{? user ?}'
-      password: '{? password ?}'
-      add_paused: yes
     list_match:
       from:
         - movie_list: movie_queue
 
-  movies_manual:
+  movies__manual:
     template: [ torrent_server ]
     set:
       path: '/media/Movies'
@@ -129,7 +137,7 @@ tasks:
     disable: [ seen ]
     manual: yes
 
-  daily_email:
+  daily-email:
     interval: 1 days
     from_digest:
       list: daily email
