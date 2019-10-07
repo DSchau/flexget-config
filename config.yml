@@ -2,13 +2,13 @@ variables: secrets.yml
 
 schedules:
   # Run TV lookup task(s) every 30 minutes
-  - tasks: 'series-*'
+  - tasks: 'tv-*'
     schedule:
       minute: "*/30"
   # Run Movie lookup task(s) every hour
-  - tasks: 'movies-*'
-    schedule:
-      minute: "*/60"
+  # - tasks: 'movie-*'
+  #   schedule:
+  #     minute: "*/60"
   # Run email task every night at 10:00 PM
   - tasks: [ daily-email ]
     schedule:
@@ -53,7 +53,7 @@ templates:
       strict: no
 
 tasks:
-  series__manual:
+  tv__manual:
     thetvdb_lookup: yes
     csv:
       url: '{? csv.shows ?}'
@@ -66,7 +66,7 @@ tasks:
       - entry_list: entries
     manual: yes
 
-  series-btn:
+  tv-btn:
     template: [ tv, size_limit ]
     priority: 1
     discover:
@@ -78,34 +78,25 @@ tasks:
     digest: daily email
     max_reruns: 3
 
-  tv_manual:
-    template: [ torrent_server ]
-    accept_all: yes
-    thetvdb_lookup: yes
-    metainfo_series: yes
-    disable: [ seen ]
-    manual: yes
-
-  movies-queue:
+  movie-requests:
     priority: 1
     imdb_lookup: yes
     csv:
-      url: '{? csv.movies ?}'
+      url: '{? csv.movies.requests ?}'
       values:
-        title: 1
-        url: 1
+        title: 2
+        url: 2
     accept_all: yes
     list_add:
-      - movie_list: movie_queue
+      - movie_list: movie_requests
     manual: yes
 
-  movies-ptp:
+  movie-ptp:
     priority: 2
     template: [ torrent_server ]
     set:
       path: '/media/Movies'
       add_paused: yes
-    imdb_lookup: yes
     discover:
       what:
         - movie_list: movie_queue
@@ -114,6 +105,9 @@ tasks:
             username: '{? ptp.username ?}'
             password: '{? ptp.password ?}'
             passkey: '{? ptp.passkey ?}'
+            order_by: Seeders
+    imdb_lookup: yes
+    torrent_alive: 25
     quality:
       - 720p bluray
     digest: daily email
@@ -121,26 +115,10 @@ tasks:
       from:
         - movie_list: movie_queue
 
-  movies__manual:
-    template: [ torrent_server ]
-    set:
-      path: '/media/Movies'
-    accept_all: yes
-    disable: [ seen ]
-    manual: yes
-
-  music_manual:
-    template: [ torrent_server ]
-    set:
-      path: '/media/Music'
-    accept_all: yes
-    disable: [ seen ]
-    manual: yes
-
   daily-email:
-    interval: 1 days
     from_digest:
       list: daily email
+      limit: 50
       restore_state: yes
     disable: [ seen ]
     metainfo_series: yes
