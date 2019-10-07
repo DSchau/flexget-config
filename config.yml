@@ -3,12 +3,12 @@ variables: secrets.yml
 schedules:
   # Run TV lookup task(s) every 30 minutes
   - tasks: 'tv-*'
-    schedule:
-      minute: "*/30"
+    interval:
+      minutes: 30
   # Run Movie lookup task(s) every hour
   - tasks: 'movie-*'
-    schedule:
-      minute: "*/60"
+    interval:
+      hours: 1
   # Run email task every night at 10:00 PM
   - tasks: [ daily-email ]
     schedule:
