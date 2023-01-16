@@ -1,11 +1,17 @@
 series:
+    #  from:
+    # sonarr_list:
+    # base_url: http://localhost
+    #  port: 8989
+    #  api_key: '{? sonarr.api_key ?}'
+    # include_data: yes
   settings:
     favorites:
       qualities:
         - 720p webdl+
-    hbo:
+    groups:
       from_group: 
-        - NTb # Curb, Chernobyl
+        - NTb # Curb, Chernobyl, The Outsider
         - TxN
         - DON
         - CtrlHD
@@ -16,14 +22,18 @@ series:
         - BATV # John Oliver
         - NorTV # Silicon Valley
         - monkee # Westworld
-        - AMZN
+        - AMZN # The outsider
+        - AMRAP # Mandalorian
+        - KiNGS # Watchmen
       qualities:
-        - 720p webrip+
+        - 720p webdl+
     animation:
       from_group:
         - iT00NZ
         - monkee
         - QOQ # Rick and Morty
+        - TBS # Rick and Morty
+        - CtrlHD
     new:
         qualities:
           - 720p hdtv+
@@ -45,7 +55,7 @@ series:
     - Sherlock
     - South Park
     - Review
-  hbo:
+  groups:
     - Game of Thrones
     - True Detective
     - Silicon Valley
@@ -54,6 +64,14 @@ series:
     - Curb your Enthusiasm
     - Barry
     - The Case Against Adnan Syed
+    - His Dark Materials
+    - The Mandalorian
+    - Watchmen
+    - The Outsider (2020)
+    - Raised by Wolves
+    - Lovecraft Country
+    - The Vow
+    - The Third Day
   animation:
     - Rick and Morty
   new:
@@ -64,8 +82,6 @@ series:
     - Nathan for You
     - Atlanta
     - Saturday Night Live
-    - The Bachelor
-    - The Bachelorette
     - Taboo
     - Prison Break
     - Who is America
@@ -73,4 +89,10 @@ series:
     - The Walking Dead
     - The Sinner
     - What We Do in the Shadows
-    - Bachelor in Paradise
+    - The Righteous Gemstones
+    - Little Fires Everywhere
+    - DAVE
+    - Devs
+    - The Last Dance
+    - Wellington Paranormal
+    - Bluey (2018)

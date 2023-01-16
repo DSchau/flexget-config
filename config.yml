@@ -2,13 +2,13 @@ variables: secrets.yml
 
 schedules:
   # Run TV lookup task(s) every 30 minutes
-  - tasks: 'tv-*'
+  - tasks: [ 'tv-*' ]
     interval:
       minutes: 30
   # Run Movie lookup task(s) every hour
-  - tasks: 'movie-*'
-    interval:
-      hours: 1
+  # - tasks: 'movie-*'
+  #  interval:
+  #    hours: 1
   # Run email task every night at 10:00 PM
   - tasks: [ daily-email ]
     schedule:
@@ -78,45 +78,46 @@ tasks:
     digest: daily email
     max_reruns: 3
 
-  movie-requests:
-    priority: 1
-    imdb_lookup: yes
-    csv:
-      url: '{? csv.movies.requests ?}'
-      values:
-        title: 2
-        url: 2
-    accept_all: yes
-    seen: local
-    list_add:
-      - movie_list: movie_requests
+  # movie-requests:
+  #   priority: 1
+  #   imdb_lookup: yes
+  #   csv:
+  #     url: '{? csv.movies ?}'
+  #     values:
+  #       title: 2
+  #       url: 2
+  #   accept_all: yes
+  #   seen: local
+  #   list_add:
+  #     - movie_list: movie_requests
 
-  movie-ptp:
-    priority: 2
-    template: [ torrent_server ]
-    set:
-      path: '/media/Movies'
-      add_paused: yes
-    discover:
-      what:
-        - limit:
-            amount: 50
-            from:
-              movie_list: movie_queue
-      from:
-        - passthepopcorn:
-            username: '{? ptp.username ?}'
-            password: '{? ptp.password ?}'
-            passkey: '{? ptp.passkey ?}'
-            order_by: Seeders
-    imdb_lookup: yes
-    torrent_alive: 10
-    quality:
-      - 720p bluray
-    digest: daily email
-    list_match:
-      from:
-        - movie_list: movie_queue
+  # movie-ptp:
+  #   priority: 2
+  #   template: [ torrent_server ]
+  #   set:
+  #     path: '/media/Movies'
+  #     add_paused: yes
+  #   discover:
+  #     what:
+  #       - limit:
+  #           amount: 50
+  #           from:
+  #             movie_list: movie_requests
+  #     from:
+  #       - passthepopcorn:
+  #           username: '{? ptp.username ?}'
+  #           password: '{? ptp.password ?}'
+  #           passkey: '{? ptp.passkey ?}'
+  #           order_by: Seeders
+  #     release_estimations: ignore
+  #   imdb_lookup: yes
+  #   torrent_alive: 10
+  #   quality:
+  #     - 720p+ webdl+
+  #   digest: daily email
+  #   list_match:
+  #     from:
+  #       - movie_list: movie_queue
 
   daily-email:
     from_digest:
